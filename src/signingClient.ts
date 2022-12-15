@@ -180,9 +180,9 @@ export class ISCNSigningClient {
     payload: ISCNSignPayload,
     { fee: inputFee, gasPrice, ...signOptions }: ISCNSignOptions = {},
   ): Promise<TxRaw | DeliverTxResponse> {
+    const messages = [formatMsgCreateIscnRecord(senderAddress, payload)];
     const client = this.signingClient;
     if (!client) throw new Error('SIGNING_CLIENT_NOT_CONNECTED');
-    const messages = [formatMsgCreateIscnRecord(senderAddress, payload)];
     let fee = inputFee;
     if (fee && gasPrice) throw new Error('CANNOT_SET_BOTH_FEE_AND_GASPRICE');
     if (!fee) {
